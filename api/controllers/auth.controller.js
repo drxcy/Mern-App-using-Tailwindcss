@@ -50,7 +50,7 @@ export const signin = async (req,res,next)=>
     }).json(rest);
 
    } catch (err) {
-    
+    next(err);
    }
 
 }
