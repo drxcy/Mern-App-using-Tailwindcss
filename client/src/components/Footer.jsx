@@ -11,7 +11,7 @@ export default function FooterComp() {
               to="/"
               className=" self-center whitespace-nowrap text-lg sm:text-xl font-semibold dark:text-white"
             >
-              <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+              <span className="px-2 py-1 bg-gradient-to-r from-purple-500 via-orange-400 to-pink-500 rounded-lg text-white">
                 Pincho's
               </span>
               Blog
@@ -20,7 +20,7 @@ export default function FooterComp() {
           <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 sm:gap-6">
             <div>
               <Footer.Title title="About" />
-              <Footer.LinkGroup>
+              <Footer.LinkGroup col>
                 <Footer.Link
                   href="#project"
                   target="_blank"
@@ -39,7 +39,7 @@ export default function FooterComp() {
             </div>
             <div>
               <Footer.Title title="Follow Us" />
-              <Footer.LinkGroup>
+              <Footer.LinkGroup col>
                 <Footer.Link
                   href="#GitHub"
                   target="_blank"
@@ -57,8 +57,8 @@ export default function FooterComp() {
               </Footer.LinkGroup>
             </div>
             <div>
-              <Footer.Title title="Legal" />
-              <Footer.LinkGroup>
+              <Footer.Title title="Legal"/>
+              <Footer.LinkGroup col>
                 <Footer.Link
                   href="#privacyPolicy"
                   target="_blank"
@@ -85,6 +85,7 @@ export default function FooterComp() {
           <Footer.Icon href="#" icon={BsFacebook}/>
           <Footer.Icon href="#" icon={BsGithub}/>
           <Footer.Icon href="#" icon={BsTwitter}/>
+          <Footer.Icon href="#" icon={BsLinkedin}/>
           <Footer.Icon href="#" icon={BsInstagram}/>
           <Footer.Icon href="#" icon={BsGoogle}/>
         </div>
