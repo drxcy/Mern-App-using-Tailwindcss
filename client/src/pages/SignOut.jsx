@@ -1,23 +1,25 @@
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch,useSelector } from "react-redux";
+import { signInStart,signInSuccess,signInFailure } from "../../redux/user/userSlice";
+import OAuth from "../components/OAuth";
 
 export default function SignOut() {
   const [formdata, setformdata] = useState({});
-  const [errorMessage, seterrorMessage] = useState(null);
-  const [isLoading, setisLoading] = useState(false);
+  const{ Loading, error:errorMessage} = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handlerChange = (e) => {
     setformdata({ ...formdata, [e.target.id]: e.target.value.trim() });
   };
   const handlerSubmit = async (e) => {
     e.preventDefault();
     if (!formdata.username || !formdata.password || !formdata.email) {
-      return seterrorMessage("All Fields Required to Fill");
+      dispatch(signInFailure("All Fields Required to Fill"));
     }
     try {
-      setisLoading(true);
-      seterrorMessage(null);
+     dispatch(signInStart());
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -25,15 +27,16 @@ export default function SignOut() {
       });
       const data = await res.json();
       if (data.success === false) {
-        return seterrorMessage(data.message);
+       dispatch(signInFailure(data.message));
       }
-      setisLoading(false);
+      
       if (res.ok) {
+        dispatch(signInSuccess());
         navigate("/sign-in");
       }
     } catch (err) {
-      seterrorMessage(err.message);
-      setisLoading(false);
+      dispatch(signInFailure(err.message));
+     
     }
   };
   return (
@@ -86,9 +89,9 @@ export default function SignOut() {
             <Button
               gradientDuoTone="purpleToPink"
               type="submit"
-              disabled={isLoading}
+              disabled={Loading}
             >
-              {isLoading ? (
+              {Loading ? (
                 <>
                   <Spinner size="sm" />
                   <span className=" pl-3 animate-spin -ml-1 mr-3 h-5 w-5 rounded-full bg-white dark:bg-gray-800">
@@ -99,6 +102,7 @@ export default function SignOut() {
                 "Sign Out"
               )}
             </Button>
+            <OAuth/>
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>

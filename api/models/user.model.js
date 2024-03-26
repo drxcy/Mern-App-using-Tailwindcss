@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    imageUrl: {
+      type: String,
+      required: true,
+      default:'https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png',
+    },
   },
   { timestamps: true }
 );
