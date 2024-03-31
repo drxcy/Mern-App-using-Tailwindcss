@@ -61,26 +61,26 @@ export const google =  async (req,res,next) =>
       const user = User.findOne({email});
       if(user)
       {
-         const token = jwt.sign({id: user.id},process.env.JWT_SECRET);
-         const { password, ...rest}= user._doc;
+         const token = jwt.sign({id: user._id},process.env.JWT_SECRET);
+         const {password, ...rest}= user._doc;
          res.status(200).cookie('access_token',token,{
             httpOnly: true,
          }).json(rest);
       }
-      else 
+     else
       {
-         const genratedPassword = Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8) 
-         ;
-         const hashedPassword = bcryptjs.hashSync(genratedPassword,10);
+         const genratedPassword = Math.random().toString(36).slice(-8)+Math.random().toString(36).slice(-8);
+         const hashedPassword = bcryptjs.hashSync(genratedPassword ,10);
          const newUser = new User({
-            email,
             username:name.toLowerCase().split('').join('')+Math.random().toString(9).slice(-4),
+            email,
             password:hashedPassword,
             imageUrl:googlePhotoURL,
          });
           await newUser.save();
-         const token = jwt.sign({id: newUser.id},process.env.JWT_SECRET);
+         const token = jwt.sign({id: newUser._id},process.env.JWT_SECRET);
          const { password,...rest}= newUser._doc;
+         
          res.status(200).cookie('access_token',token,{
             httpOnly: true,
          }).json(rest);
@@ -96,7 +96,7 @@ export const github = async(req,res,next)=>
       const user =  await User.findOne({email});
       if(user)
       {
-         const token = jwt.sign({id: user.id},process.env.JWT_SECRET);
+         const token = jwt.sign({id: user._id},process.env.JWT_SECRET);
          const { password, ...rest}= user._doc;
          res.status(200).cookie('access_token',token,{
             httpOnly: true,
@@ -108,17 +108,20 @@ export const github = async(req,res,next)=>
          ;
          const hashedPassword = bcryptjs.hashSync(genratedPassword,10);
          const newUser = new User({
-            email,
             username:name.toLowerCase().split('').join('')+Math.random().toString(9).slice(-4),
+            email,
             password:hashedPassword,
             imageUrl:githubPhotoUrl,
          });
           await newUser.save();
-         const token = jwt.sign({id: newUser.id},process.env.JWT_SECRET);
+         const token = jwt.sign({id: newUser._id},process.env.JWT_SECRET);
+
          const { password,...rest}= newUser._doc;
+         
          res.status(200).cookie('access_token',token,{
             httpOnly: true,
          }).json(rest);
+        
       }
       
    } catch (err) {

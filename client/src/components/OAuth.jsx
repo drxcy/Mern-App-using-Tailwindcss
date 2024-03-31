@@ -11,8 +11,8 @@ export default function OAuth() {
     const navigate = useNavigate();
     const handlerGoogleClick = async()=>
     {
-        const provider = new GoogleAuthProvider()
-        provider.setCustomParameters({prompt:'select_account'})
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({prompt:'select_account' })
         try {
           const resultGoogleAccount= await signInWithPopup(auth,provider)
           const res = await fetch('api/auth/google',
@@ -39,7 +39,7 @@ export default function OAuth() {
     const handlerGithubClick = async()=>
     {
         const provider = new GithubAuthProvider()
-        provider.setCustomParameters({prompt:'select_account'})
+        provider.setCustomParameters({prompt:'select_account' })
         try {
           const resultGithubAccount= await signInWithPopup(auth,provider)
           const res = await fetch('api/auth/github',
@@ -51,7 +51,7 @@ export default function OAuth() {
                 name:resultGithubAccount.user.displayName,
                 githubPhotoURL:resultGithubAccount.user.photoURL,
             }),
-          })
+          });
           const data = await res.json();
           if (res.ok) {
            dispatch(signInSuccess(data));
@@ -82,3 +82,4 @@ export default function OAuth() {
 
   )
 }
+
