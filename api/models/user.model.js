@@ -20,6 +20,11 @@ const userSchema = new mongoose.Schema(
       required: true,
       default:'https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png',
     },
+    isAdmin:
+    {
+      type: 'boolean',
+      default: false,
+    },
   },
   { timestamps: true }
 );
