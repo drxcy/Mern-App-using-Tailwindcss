@@ -21,8 +21,8 @@ export default function SignOut() {
     try {
      dispatch(signInStart());
       const res = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method:'POST',
+        headers: {'Content-Type': 'application/json',},
         body: JSON.stringify(formdata),
       });
       const data = await res.json();
@@ -99,7 +99,7 @@ export default function SignOut() {
                   </span>
                 </>
               ) : (
-                "Sign Out"
+                "Sign Up"
               )}
             </Button>
             <OAuth/>

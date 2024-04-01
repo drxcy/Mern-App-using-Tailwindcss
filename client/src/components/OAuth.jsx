@@ -3,7 +3,7 @@ import { AiFillGoogleCircle ,AiFillGithub} from "react-icons/ai";
 import {GoogleAuthProvider, getAuth, signInWithPopup,GithubAuthProvider} from 'firebase/auth';
 import { app } from "../firebase";
 import { useDispatch } from "react-redux";
-import { signInSuccess } from "../../redux/user/userSlice";
+import { signInFailure, signInSuccess } from "../../redux/user/userSlice";
 import { useNavigate } from "react-router-dom";
 export default function OAuth() {
     const auth = getAuth(app)
@@ -38,8 +38,8 @@ export default function OAuth() {
     }
     const handlerGithubClick = async()=>
     {
-        const provider = new GithubAuthProvider()
-        provider.setCustomParameters({prompt:'select_account' })
+        const provider = new GithubAuthProvider();
+        provider.setCustomParameters({ prompt:'select_account' })
         try {
           const resultGithubAccount= await signInWithPopup(auth,provider)
           const res = await fetch('api/auth/github',
@@ -53,14 +53,17 @@ export default function OAuth() {
             }),
           });
           const data = await res.json();
+          console.log(data);
           if (res.ok) {
            dispatch(signInSuccess(data));
            navigate('/');
           }
-
+          else{
+            dispatch(signInFailure(data.message));
+          }
         }
          catch(err) {
-            console.log(err);
+            console.log(err.message);
         }
     }
   return (

@@ -5,14 +5,15 @@ import {getDownloadURL, getStorage,ref,uploadBytesResumable} from 'firebase/stor
 import { app } from "../../../firebase";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSuccess,deleteUserFailure} from "../../../../redux/user/userSlice";
+import { updateStart,updateSuccess,updateFailure,deleteUserStart,deleteUserSuccess,deleteUserFailure,signOutSuccess} from "../../../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import {Link} from 'react-router-dom';
 
 
 export default function DashProfile() {
     
-    const { currentUser,error } = useSelector((state) => state.user);
+    const { currentUser,error,loading } = useSelector((state) => state.user);
     const [imageFile,setimageFile]= useState(null);
     const [imageFileURL,setimageFileURL]= useState(null);
     const[imageFileUploadProgress,setimageFileUploadProgress]= useState(null);
@@ -159,6 +160,21 @@ return;
 
         }
     }
+    const handlerSignout = async () => {
+        try {
+          const res = await fetch('/api/user/signout', {
+            method: 'POST',
+          });
+          const data = await res.json();
+          if (!res.ok) {
+            console.log(data.message);
+          } else {
+            dispatch(signOutSuccess());
+          }
+        } catch (error) {
+          console.log(error.message);
+        }
+      };
   return (
     <div className='max-w-lg mx-auto p-3 w-full'>
       <h1 className='my-7 text-center font-semibold text-3xl'>Profile</h1>
@@ -221,19 +237,34 @@ return;
         onChange={handlerChange}
         /> 
         <Button
-        gradientDuoTone="purpleToPink"
+        gradientDuoTone="pinkToOrange"
         type="submit"
+        disabled={loading ||imageFileUploading}
         outline
         >
-        Update
+        { loading ? "Loading..." :"Update"}
         </Button>
+        {
+          currentUser.isAdmin &&(
+            <Link to={'/create-post'}>
+            <Button
+            gradientDuoTone="greenToBlue"
+            type="button"
+            className='w-full'
+           >
+           Create a new Post
+            </Button>
+            </Link>
+
+          )
+        }
       </form>
       <div className="text-red-500 justify-between mt-5 flex">
         <span className="cursor-pointer"
         onClick={()=>setshowModal(true)}>
             Delete Account
         </span>
-        <span className="cursor-pointer">
+        <span onClick={handlerSignout} className="cursor-pointer">
            Sign Out
         </span>
       </div>

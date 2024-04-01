@@ -7,7 +7,7 @@ import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formdata, setformdata] = useState({});
-  const{loading,error:errorMessage}= useSelector((state) =>state.user);;
+  const{loading,error:errorMessage}= useSelector((state) =>state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handlerChange = (e) => {
@@ -15,7 +15,7 @@ export default function SignIn() {
   };
   const handlerSubmit = async (e) => {
     e.preventDefault();
-    if ( !formdata.password || !formdata.email) {
+    if (!formdata.password || !formdata.email) {
       dispatch(signInFailure("Please enter all required fields"));
     }
     try {
@@ -85,7 +85,7 @@ export default function SignIn() {
                 <>
                   <Spinner size="sm" />
                   <span className=" pl-3 animate-spin -ml-1 mr-3 h-5 w-5 rounded-full bg-white dark:bg-gray-800">
-                    L
+                    l
                   </span>
                 </>
               ) : (
