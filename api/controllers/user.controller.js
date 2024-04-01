@@ -75,10 +75,18 @@ export const deleteUser =  async (req, res,next) => {
         return next(errorHandler(403,"You are not allowed to udpate an existing user"));
     }
     try {
-        const deletedUser = await User.findByIdAndDelete(req.params.userId);
+         await User.findByIdAndDelete(req.params.userId);
         res.status(200).json("User has been deleted successfully");
     } catch (err) {
         next(err);
     }
 
 }
+export const signout = async (req, res,next) => {
+    try {
+        res.clearCookie("access_token").status(200).json("Successfully signed out",);
+    } catch (error) {
+        next(error);
+        
+    }
+};
