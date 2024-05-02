@@ -7,4 +7,6 @@ body{
 .ql-editor
 {
     font-size: 1.05rem;
+    height: 25vh;
+    margin-bottom: 12rem;
 }

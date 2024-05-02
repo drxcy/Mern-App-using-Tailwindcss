@@ -1,15 +1,21 @@
 import { Sidebar } from 'flowbite-react'
 import { useLocation ,Link} from 'react-router-dom';
 import { useState,useEffect } from 'react';
-import {HiArrowSmRight, HiUser} from 'react-icons/hi';
-import { useDispatch } from 'react-redux';
+import {HiArrowSmRight, HiDocumentText, HiUser} from 'react-icons/hi';
+import { useDispatch, useSelector } from 'react-redux';
 import { signOutSuccess } from '../../../../redux/user/userSlice';
 
-export default function DashSidebar() {
+export default function DashSidebar() 
+{
+  const currentUser = useSelector((state) =>state.user);
+  // const currentUser =useSelector((state) => state.user.currentUser);
+  
   const dispatch = useDispatch();
-    const location = useLocation();
-    const[tab,settab]= useState('')
-    useEffect(()=>
+  const location = useLocation();
+  const[tab,settab]= useState('');
+ 
+  
+  useEffect(()=>
     {
       const urlParams = new URLSearchParams(location.search);
       const tabFromUrl = urlParams.get('tab');
@@ -34,17 +40,33 @@ export default function DashSidebar() {
         console.log(error.message);
       }
     };
-  return (
+    console.log(currentUser.currentUser.isAdmin)
+    console.log(currentUser);
+   console.log( currentUser.currentUser.isAdmin)
+   return (
     <Sidebar className='w-full md:w-56'>
       <Sidebar.Items>
-        <Sidebar.ItemGroup>
+        <Sidebar.ItemGroup className='flex flex-col gap-1'>
             <Link to='/dashboard?tab=profile'>
             <Sidebar.Item active={tab==='profile'} icon={HiUser} label=
-            {"user"}
+            {currentUser.currentUser.isAdmin ? ' Admin' :'User'}
             labelColor="dark" as='div'>
             Profile
             </Sidebar.Item>
             </Link>
+          
+
+            {currentUser.currentUser.isAdmin && (
+              
+              <Link to='/dashboard?tab=posts'>
+              <Sidebar.Item active={tab==='posts'} icon={HiDocumentText} 
+              label={currentUser.currentUser.isAdmin ? ' Admin' :'User'}
+              labelColor="dark" as='div'>
+              Posts
+              </Sidebar.Item>
+              </Link>
+            )}
+            
             <Sidebar.Item icon={HiArrowSmRight} 
             className='cursor-pointer'
              as ='div'
