@@ -10,3 +10,29 @@ body{
     height: 25vh;
     margin-bottom: 12rem;
 }
+.post-content p {
+    margin-bottom: 0.5rem;
+}
+.post-content h1{
+    font-size: 2.5rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+.post-content h2{
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: sans-serif;
+    margin: 1.5rem 0;
+}
+.post-content a{
+    color: rgb(165, 235, 233);
+    text-decoration: none;
+}
+.post-content a:hover{
+    color: rgb(181, 235, 165);
+    text-decoration: underline;
+}
+.dark .post-content a{
+   color : rgb(54, 179, 30);
+}

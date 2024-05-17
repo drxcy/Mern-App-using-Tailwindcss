@@ -60,21 +60,23 @@ export default function CreatePost() {
   const handlerSubmit= async(e)=> {
     e.preventDefault();
     try {
-      const res =await fetch('api/post/create',{
+      const res = await fetch('/api/post/create-post',{
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      const data = res.json();
+      const data =  await res.json();
       if(!res.ok)
       {
         setpublishError(data.message);
+        console.log(data)
         return;
       }
       if(res.ok)
       {
         setpublishError(null);
-        navigate(`/posts/${data.slug}`);
+        // navigate(`/posts/${data.slug}`);
+        navigate(`/post/${data.slug}`);
       }
     } catch (error) {
       setpublishError("Something went wrong");
