@@ -58,7 +58,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
           alt={user.username}
         />
       </div>
-      <div className='flex-1'>
+      <div className='flex-1' >
         <div className='flex items-center mb-1'>
           <span className='font-bold mr-1 text-xs truncate'>
             {user ? `@${user.username}` : 'anonymous user'}

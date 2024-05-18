@@ -97,6 +97,7 @@ export const updatePost =async(req,res,next) => {
     );
     res.status(200).json(updatedPost);
   } catch (error) {
+    console.log(error.message);
     next(error);
   }
 };

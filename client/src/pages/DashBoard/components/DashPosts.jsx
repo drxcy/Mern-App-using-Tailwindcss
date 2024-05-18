@@ -16,7 +16,7 @@ export default function DashPosts() {
       try {
         const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
         const data = await res.json();
-        if (res.ok) {
+        if(res.ok) {
           setUserPosts(data.posts);
           if (data.posts.length < 9) {
             setShowMore(false);
@@ -87,7 +87,7 @@ export default function DashPosts() {
               </Table.HeadCell>
             </Table.Head>
             {userPosts.map((post) => (
-              <Table.Body key={post} className='divide-y'>
+              <Table.Body  className='divide-y'>
                 <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
                   <Table.Cell>
                     {new Date(post.updatedAt).toLocaleDateString()}
