@@ -12,7 +12,7 @@ mongoose
   .connect(process.env.MONGO)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
-  const __dirname = resolve.path();
+  const __dirname = path.resolve();
 
 const app = express();
 app.use(express.json());
